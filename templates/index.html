@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Energy Demand Prediction in Australia</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="title">
+    <h1>Energy Demand Prediction in Australia</h1>
+    <h2>Short-term energy demand predictions for Tasmania, New South Wales, Victoria, South Australia, and Queensland based on weather, seasonal, and temporal parameters</h2>
+    <h3>Note: The seasons in Australia are at opposite times to those in the Northern Hemisphere (Summer from December to February, Autumn from March to May, Winter from June to August, and Spring from September to November). The times of the day are categorized as Morning (05–12), Afternoon (12–17), Evening (17–21), and Night (21–05) in 24-hour time.</h3> 
+</div>
+<div class="container">
+   <div class="left-side">
+     <form action="{{url_for('predict')}}" method="POST">
+        <label for="region">Region:</label>
+        <select id="region" name="region">
+            <option value="Queensland">Queensland</option>
+            <option value="South Australia">South Australia</option>
+            <option value="Tasmania">Tasmania</option>
+            <option value="Victoria">Victoria</option>
+            <option value="New South Wales">New South Wales</option>
+        </select>
+        <!-- Weather Parameters -->
+        <div id="weather_parameters">
+            <h3>Weather Parameters:</h3>
+            <div class="input-container">
+                <label for="WetBulbTemperature">Wet Bulb Temperature: in degrees C (IQR: 17°C-10°C)</label>
+                <input type="number" id="wet_bulb_temperature" name="wet_bulb_temperature">
+            </div>
+            <div class="input-container">
+                <label for="AirTemperature">Air Temperature: in degrees C (IQR: 23°C-15°C)</label>
+                <input type="number" id="air_temperature" name="air_temperature">
+            </div>
+            <div class="input-container">
+                <label for="DewTemperature">Dew Point Temperature: in degrees C (IQR: 15°C-6°C)</label>
+                <input type="number" id="dew_point_temperature" name="dew_point_temperature">
+            </div>
+            <div class="input-container">
+                <label for="RelativeHumidity%">Relative Humidity: as a percentage % (IQR: 79%-52%)</label>
+                <input type="number" id="relative_humidity" name="relative_humidity">
+            </div>
+            <div class="input-container">
+                <label for="Precipitation">Precipitation: in mm (IQR: 0.2mm-0mm)</label>
+                <input type="number" id="precipitation" name="precipitation" step="0.1" min="0">
+            </div>
+            <div class="input-container">
+                <label for="StationPressure">Station Pressure: in hPa (hectopascals) (IQR: 1018 hPa-1008 hPa)</label>
+                <input type="number" id="station_pressure" name="station_pressure">
+            </div>
+            <div class="input-container">
+                <label for="SeaPressure">Mean Sea Level Pressure (MSLP): in hPa (hectopascals) (IQR: 1021 hPa-1012 hPa)</label>
+                <input type="number" id="sea_pressure" name="sea_pressure">
+            </div>
+        </div>
+    </div>
+    <div class="right-side">
+        <h3>Seasonal and Temporal Parameters:</h3>
+        <div class="input-container">
+            <label for="Hour">Hour: indicates the daily consumption cycle and its impact on energy usage.</label>
+            <input type="number" id="hour" name="hour" min="0" max="23">
+        </div>
+        <div class="input-container">
+            <label for="time_of_day">Time of the Day: the four periods of the day</label>
+            <select id="time_of_day" name="time_of_day">
+                <option value="Morning">Morning</option>
+                <option value="Afternoon">Afternoon</option>
+                <option value="Evening">Evening</option>
+                <option value="Night">Night</option>
+            </select>
+        </div>
+        <div class="input-container">
+            <label for="DayofYear">Day of the Year: the specific day in the annual calendar</label>
+            <input type="number" id="day_of_year" name="day_of_year" min="1" max="365">
+        </div>
+        <div class="input-container">
+            <label for="Day">Day of the Month: the specific day of the month</label>
+            <input type="number" id="day_of_month" name="day_of_month" min="1" max="31">
+        </div>
+        <div class="input-container">
+            <label for="Month">Month: the month of the year</label>
+            <select id="month" name="month">
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select>
+        </div>
+        <div class="input-container">
+            <label for="season">Season: the four periods of the year</label>
+            <select id="season" name="season">
+                <option>Autumn</option>
+                <option>Spring</option>
+                <option>Summer</option>
+                <option>Winter</option>
+            </select>
+        </div>
+        <div class="input-container">
+            <label for="weekday_weekend">Weekday or Weekend: indicates whether a specific day is a weekday or a weekend</label>
+            <select id="weekday_weekend" name="weekday_weekend">
+                <option value="weekday">Weekday</option>
+                <option value="weekend">Weekend</option>
+            </select>
+        </div>
+        <div class="input-container">
+            <input class="btn btn-primary" type="submit" value="Submit" required />
+        </div>
+    </div>
+    </form>
+</div>
+</body>
+</html>
+
+
+
+
